@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "harvests",
+  "info": {
+    "singularName": "harvest",
+    "pluralName": "harvests",
+    "displayName": "Harvest",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "note": {
+      "type": "text"
+    },
+    "harvest_amount": {
+      "type": "decimal"
+    },
+    "date_of_harvest": {
+      "type": "date"
+    },
+    "orchard": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::orchard.orchard",
+      "inversedBy": "harvests"
+    }
+  }
+}

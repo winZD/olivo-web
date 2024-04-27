@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "expenses",
+  "info": {
+    "singularName": "expense",
+    "pluralName": "expenses",
+    "displayName": "Expense",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "users_permissions_user": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::users-permissions.user"
+    },
+    "fertilization": {
+      "type": "float"
+    },
+    "orchard": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::orchard.orchard",
+      "inversedBy": "expenses"
+    },
+    "property": {
+      "type": "string"
+    }
+  }
+}

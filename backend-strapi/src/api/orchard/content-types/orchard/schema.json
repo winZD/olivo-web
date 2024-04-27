@@ -1,0 +1,40 @@
+{
+  "kind": "collectionType",
+  "collectionName": "orchards",
+  "info": {
+    "singularName": "orchard",
+    "pluralName": "orchards",
+    "displayName": "Orchard",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "location": {
+      "type": "string"
+    },
+    "olive_trees": {
+      "type": "integer"
+    },
+    "percentage_of_oil": {
+      "type": "string"
+    },
+    "size": {
+      "type": "biginteger"
+    },
+    "expenses": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::expense.expense",
+      "mappedBy": "orchard"
+    },
+    "harvests": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::harvest.harvest",
+      "mappedBy": "orchard"
+    }
+  }
+}
