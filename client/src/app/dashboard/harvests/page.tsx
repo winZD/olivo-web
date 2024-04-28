@@ -3,6 +3,7 @@
 import axios from "axios";
 
 import {
+  Input,
   Table,
   TableBody,
   TableCell,
@@ -14,13 +15,31 @@ import {
 import { useEffect, useState } from "react";
 import { Harvest } from "@/app/models/harvest";
 import { useSession, getSession } from "next-auth/react";
+import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 
 const HarvestPage = () => {
-  const [havestData, setHarvestData] = useState<{
+  const [harvestData, setHarvestData] = useState<{
     data: [{ id: number; attributes: Harvest }];
   }>();
 
   const { data: session, status } = useSession();
+
+  const [searchQuery, setSearchQuery] = useState("");
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const filteredData = harvestData?.data.filter(
+    (n) =>
+      n.attributes.harvest_amount
+        .toString()
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase()) ||
+      new Date(n.attributes.date_of_harvest)
+        .toDateString()
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase())
+  );
 
   useEffect(() => {
     const fetchHarvests = async () => {
@@ -52,34 +71,31 @@ const HarvestPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);
 
-  /* useEffect(() => {
-    const fetchData = async () => {
-      const session = await getSession();
-      if (session) {
-        // Fetch data or send JWT to Strapi here
-      }
-    };
-
-    if (!loading) {
-      fetchData();
-    }
-  }, [loading]) */
+  console.log(harvestData);
 
   return (
     <>
-      <div>
+      <div className="mb-4">
         {" "}
         <span>Harvests</span>
+        <Input
+          label="Search by any field"
+          startContent={<MagnifyingGlassIcon className="w-4" />}
+          type="text"
+          value={searchQuery}
+          onChange={handleSearchChange}
+          placeholder="Search..."
+        />
       </div>
 
-      {havestData ? (
+      {filteredData?.length ? (
         <Table isStriped aria-label="Example static collection table">
           <TableHeader>
             <TableColumn>Date of harvest</TableColumn>
             <TableColumn>Harvest amount</TableColumn>
           </TableHeader>
           <TableBody>
-            {havestData?.data.map((n) => (
+            {filteredData?.map((n) => (
               <TableRow
                 key={n.id}
                 /*  onClick={() =>

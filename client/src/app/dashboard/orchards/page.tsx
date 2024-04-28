@@ -70,7 +70,7 @@ const OrchardsPage = () => {
 
   return (
     <>
-      <div>
+      <div className="mb-4">
         <h1>Orchards</h1>
         <Input
           label="Search by any field"
